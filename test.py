@@ -10,6 +10,10 @@ def main():
     volume = interface.QueryInterface(IAudioEndpointVolume)
 
     APIKEY = "1adce522-edca-48ba-b4e1-212552bca6eb"
+    minHR = 60 # set heartrate for minimum volume
+    maxHR = 200 # set heartrate for maximum volume 
+    minVol = 10 # set minimum volume
+    maxVol = 100 # set maximum volume
 
     url = "https://dev.pulsoid.net/api/v1/data/heart_rate/latest?response_mode=text_plain_only_heart_rate"
     headers = {
@@ -23,7 +27,8 @@ def main():
         print("HR: ", response.text)
         heartrate = int(response.text)
 
-        computerVolume = rangeAdjust(60,200,10,100,heartrate)/100
+
+        computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
         volume.SetMasterVolumeLevelScalar(computerVolume, None)
         print("Volume: ", round(volume.GetMasterVolumeLevelScalar() * 100))
 
@@ -32,7 +37,12 @@ def main():
 def rangeAdjust(oldMin: int, oldMax: int, newMin: int, newMax: int, val: int):
     OldRange = (oldMax - oldMin)  
     NewRange = (newMax - newMin)
-    NewValue = (((val - min) * NewRange) / OldRange) + newMin
+    NewValue = (((val - oldMin) * NewRange) / OldRange) + newMin
+
+    if NewValue > newMax:
+        return newMax
+    if NewValue < newMin:
+        return newMin
     return NewValue
 
 main()
