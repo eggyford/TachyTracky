@@ -23,16 +23,16 @@ def main():
         print("HR: ", response.text)
         heartrate = int(response.text)
 
-        computerVolume = max(rangeAdjust(60,200,heartrate),10)/100
+        computerVolume = rangeAdjust(60,200,10,100,heartrate)/100
         volume.SetMasterVolumeLevelScalar(computerVolume, None)
         print("Volume: ", round(volume.GetMasterVolumeLevelScalar() * 100))
 
         time.sleep(5)
 
-def rangeAdjust(min: int, max: int, val: int):
-    OldRange = (max - min)  
-    NewRange = (100 - 0)
-    NewValue = (((val - min) * NewRange) / OldRange)
+def rangeAdjust(oldMin: int, oldMax: int, newMin: int, newMax: int, val: int):
+    OldRange = (oldMax - oldMin)  
+    NewRange = (newMax - newMin)
+    NewValue = (((val - min) * NewRange) / OldRange) + newMin
     return NewValue
 
 main()
