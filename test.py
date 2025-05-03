@@ -6,7 +6,7 @@ devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = interface.QueryInterface(IAudioEndpointVolume)
 
-APIKEY = "1adce522-edca-48ba-b4e1-212552bca6eb"
+APIKEY = ""
 
 url = "https://dev.pulsoid.net/api/v1/data/heart_rate/latest?response_mode=text_plain_only_heart_rate"
 headers = {
