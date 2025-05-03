@@ -8,7 +8,7 @@ def main():
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = interface.QueryInterface(IAudioEndpointVolume)
 
-    APIKEY = "1adce522-edca-48ba-b4e1-212552bca6eb"
+    APIKEY = ""
     minHR = 60 # set heartrate for minimum volume
     maxHR = 200 # set heartrate for maximum volume 
     minVol = 10 # set minimum volume
