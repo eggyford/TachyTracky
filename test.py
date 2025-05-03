@@ -1,5 +1,8 @@
 import pip._vendor.requests as requests
 import time
+
+#run pip install pycaw
+
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
