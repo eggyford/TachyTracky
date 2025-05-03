@@ -3,13 +3,12 @@ import time
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
-
 def main():
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = interface.QueryInterface(IAudioEndpointVolume)
 
-    APIKEY = ""
+    APIKEY = "1adce522-edca-48ba-b4e1-212552bca6eb"
     minHR = 60 # set heartrate for minimum volume
     maxHR = 200 # set heartrate for maximum volume 
     minVol = 10 # set minimum volume
@@ -26,7 +25,6 @@ def main():
         print("Status Code:", response.status_code)
         print("HR: ", response.text)
         heartrate = int(response.text)
-
 
         computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
         volume.SetMasterVolumeLevelScalar(computerVolume, None)
