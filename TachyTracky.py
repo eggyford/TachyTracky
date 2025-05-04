@@ -36,7 +36,6 @@ def main():
         print("HR: ", response.text)
         heartrate = int(response.text)
 
-
         if controlVolume:
             computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
             volume.SetMasterVolumeLevelScalar(computerVolume, None)
@@ -47,6 +46,7 @@ def main():
             ctypes.windll.user32.SystemParametersInfoW(113, 0, mouseSens, 0)
             print("Sens: ", mouseSens)
 
+        print("\n")
         time.sleep(5)
 
 def rangeAdjust(oldMin: int, oldMax: int, newMin: int, newMax: int, val: int):
