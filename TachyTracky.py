@@ -21,7 +21,7 @@ def main():
     maxHR = 200 # set heartrate for maximum volume 
     minVol = 10 # set minimum volume (0-100)
     maxVol = 100 # set maximum volume
-    minSens = 1 # set minimum mouse sens (1-100)
+    minSens = 1 # set minimum mouse sens (1-20)
     maxSens = 20 # set maximum mouse sens
 
     url = "https://dev.pulsoid.net/api/v1/data/heart_rate/latest?response_mode=text_plain_only_heart_rate"
