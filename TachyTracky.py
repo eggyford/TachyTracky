@@ -37,7 +37,7 @@ def main():
         "Content-Type": "application/json"
     }
 
-    while(True):
+    while True:
         response = requests.get(url, headers=headers)
         print("Status Code:", response.status_code)
         print("HR: ", response.text)
@@ -56,7 +56,6 @@ def main():
         if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
             print("Heartrate out of range! Killing app!")
             subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
-
 
         print()
         time.sleep(5)
