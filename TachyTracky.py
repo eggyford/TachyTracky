@@ -54,6 +54,7 @@ def main():
             print("Sens: ", mouseSens)
 
         if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
+            print("Heartrate out of range! Killing app!")
             subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
 
 
