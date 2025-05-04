@@ -16,7 +16,7 @@ def main():
     controlVolume = True
     controlMouseSens = True
 
-    APIKEY = "1adce522-edca-48ba-b4e1-212552bca6eb"
+    APIKEY = ""
     minHR = 60 # set heartrate for minimum volume
     maxHR = 200 # set heartrate for maximum volume 
     minVol = 10 # set minimum volume (0-100)
