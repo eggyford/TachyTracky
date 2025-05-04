@@ -24,7 +24,7 @@ def main():
 
     applicationName = "" # e.g. firefox.exe
 
-    minHR = 100 # set heartrate for mins
+    minHR = 60 # set heartrate for mins
     maxHR = 200 # set heartrate for maxs 
     minVol = 10 # set minimum volume (0-100)
     maxVol = 100 # set maximum volume
