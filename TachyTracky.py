@@ -16,9 +16,10 @@ def main():
     controlVolume = True
     controlMouseSens = True
 
-    APIKEY = ""
-    minHR = 60 # set heartrate for minimum volume
-    maxHR = 200 # set heartrate for maximum volume 
+    APIKEY = "" # get key from https://pulsoid.net/ui/keys
+
+    minHR = 60 # set heartrate for mins
+    maxHR = 200 # set heartrate for maxs 
     minVol = 10 # set minimum volume (0-100)
     maxVol = 100 # set maximum volume
     minSens = 1 # set minimum mouse sens (1-20)
