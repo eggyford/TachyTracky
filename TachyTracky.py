@@ -1,12 +1,15 @@
 import pip._vendor.requests as requests # API Calls for pulsoid
 import time
 
-import ctypes # Mouse sens
-
 #run pip install pycaw
 
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume # Volume control
+
+import ctypes # Mouse sens
+
+import subprocess # App kill
+import psutil
 
 def main():
     devices = AudioUtilities.GetSpeakers()
@@ -15,10 +18,13 @@ def main():
 
     controlVolume = True
     controlMouseSens = True
+    controlAppKill = True
 
     APIKEY = "" # get key from https://pulsoid.net/ui/keys
 
-    minHR = 60 # set heartrate for mins
+    applicationName = "" # e.g. firefox.exe
+
+    minHR = 100 # set heartrate for mins
     maxHR = 200 # set heartrate for maxs 
     minVol = 10 # set minimum volume (0-100)
     maxVol = 100 # set maximum volume
@@ -47,7 +53,11 @@ def main():
             ctypes.windll.user32.SystemParametersInfoW(113, 0, mouseSens, 0)
             print("Sens: ", mouseSens)
 
-        print("\n")
+        if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
+            subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
+
+
+        print()
         time.sleep(5)
 
 def rangeAdjust(oldMin: int, oldMax: int, newMin: int, newMax: int, val: int):
@@ -60,5 +70,11 @@ def rangeAdjust(oldMin: int, oldMax: int, newMin: int, newMax: int, val: int):
     if NewValue < newMin:
         return newMin
     return NewValue
+
+def checkProcessRunning(name):
+    for process in psutil.process_iter(['name']):
+        if process.info['name'] == name:
+            return True
+    return False
 
 main()
