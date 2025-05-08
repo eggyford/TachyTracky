@@ -10,7 +10,7 @@ import ctypes # Mouse sens
 
 # pip install pynput
 
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Key, Controller # Keyboard control
 
 import subprocess # App kill
 import psutil
