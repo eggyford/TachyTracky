@@ -60,7 +60,7 @@ def main():
         heartrate = int(response.text)
 
         # debug
-        heartrate = 1
+        # heartrate = 1
 
         if controlVolume:
             computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
@@ -80,7 +80,6 @@ def main():
             subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
 
         print()
-        # time.sleep(5)
 
 def rangeAdjust(oldMin: int, oldMax: int, newMin: int, newMax: int, val: int):
     OldRange = (oldMax - oldMin)  
