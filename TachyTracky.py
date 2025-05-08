@@ -1,35 +1,49 @@
 import pip._vendor.requests as requests # API Calls for pulsoid
 import time
 
-#run pip install pycaw
+# pip install pycaw
 
-from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume # Volume control
+from comtypes import CLSCTX_ALL # Volume control
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 import ctypes # Mouse sens
+
+# pip install pynput
+
+from pynput.keyboard import Key, Controller
 
 import subprocess # App kill
 import psutil
 
 def main():
+
+    # ----------------------------------------SETUP------------------------------------
+
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = interface.QueryInterface(IAudioEndpointVolume)
 
-    controlVolume = True
-    controlMouseSens = True
-    controlAppKill = True
+    keyboard = Controller()
 
-    APIKEY = "" # get key from https://pulsoid.net/ui/keys
+    # ---------------------------------------SETTINGS----------------------------------
 
-    applicationName = "" # e.g. firefox.exe
+    controlVolume = False
+    controlMouseSens = False
+    controlKeyHold = False
+    controlAppKill = False
+
+    applicationName = "" # e.g. firefox.exe, program will be killed if HR out of range
 
     minHR = 60 # set heartrate for mins
-    maxHR = 200 # set heartrate for maxs 
+    maxHR = 200 # set heartrate for maxes 
     minVol = 10 # set minimum volume (0-100)
     maxVol = 100 # set maximum volume
     minSens = 1 # set minimum mouse sens (1-20)
     maxSens = 20 # set maximum mouse sens
+
+    # -----------------------------------------API-------------------------------------
+
+    APIKEY = "" # get key from https://pulsoid.net/ui/keys
 
     url = "https://dev.pulsoid.net/api/v1/data/heart_rate/latest?response_mode=text_plain_only_heart_rate"
     headers = {
@@ -37,11 +51,16 @@ def main():
         "Content-Type": "application/json"
     }
 
+    # ---------------------------------------FUNCTION----------------------------------
+
     while True:
         response = requests.get(url, headers=headers)
         print("Status Code:", response.status_code)
         print("HR: ", response.text)
         heartrate = int(response.text)
+
+        # debug
+        heartrate = 1
 
         if controlVolume:
             computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
@@ -53,12 +72,15 @@ def main():
             ctypes.windll.user32.SystemParametersInfoW(113, 0, mouseSens, 0)
             print("Sens: ", mouseSens)
 
+        if controlKeyHold and heartrate < minHR:
+            keyboard.press(Key.shift)
+
         if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
             print("Heartrate out of range! Killing app!")
             subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
 
         print()
-        time.sleep(5)
+        # time.sleep(5)
 
 def rangeAdjust(oldMin: int, oldMax: int, newMin: int, newMax: int, val: int):
     OldRange = (oldMax - oldMin)  
