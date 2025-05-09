@@ -27,10 +27,10 @@ def main():
 
     # ---------------------------------------SETTINGS----------------------------------
 
-    controlVolume = False
-    controlMouseSens = False
-    controlKeyHold = False
-    controlAppKill = False
+    controlVolume = False # map heartrate to computer volume
+    controlMouseSens = False # map heartrate to mouse sensitivity
+    controlKeyHold = False # hold a key if heartrate too low
+    controlAppKill = False # kill game if heartrate out of range
 
     applicationName = "" # e.g. firefox.exe, program will be killed if HR out of range
 
