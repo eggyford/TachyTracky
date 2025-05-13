@@ -71,12 +71,12 @@ def main():
             print("Sens:", mouseSens)
 
         if controlKeyHold and heartrate < minHR:
-            print("Holding", key.name)
             keyboard.press(key)
+            print("Holding", key.name)
 
         if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
-            print("Heartrate out of range! Killing", applicationName)
             subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
+            print("Heartrate out of range! Killing", applicationName)
 
         print()
 
