@@ -29,7 +29,7 @@ def main():
 
     controlVolume = False # map heartrate to computer volume
     controlMouseSens = False # map heartrate to mouse sensitivity
-    controlKeyHold = False # hold a key if heartrate too low
+    controlKeyHold = True # hold a key if heartrate too low
     controlAppKill = False # kill game if heartrate out of range
 
     key = Key.shift # e.g. Key.shift or 'c' 
@@ -57,27 +57,25 @@ def main():
     while True:
         response = requests.get(url, headers=headers)
         print("Status Code:", response.status_code)
-        print("HR: ", response.text)
+        print("HR:", response.text)
         heartrate = int(response.text)
-
-        # debug
-        # heartrate = 1
 
         if controlVolume:
             computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
             volume.SetMasterVolumeLevelScalar(computerVolume, None)
-            print("Volume: ", round(volume.GetMasterVolumeLevelScalar() * 100))
+            print("Volume:", round(volume.GetMasterVolumeLevelScalar() * 100))
 
         if controlMouseSens:
             mouseSens = round(rangeAdjust(minHR,maxHR,minSens,maxSens,heartrate))
             ctypes.windll.user32.SystemParametersInfoW(113, 0, mouseSens, 0)
-            print("Sens: ", mouseSens)
+            print("Sens:", mouseSens)
 
         if controlKeyHold and heartrate < minHR:
+            print("Holding", key.name)
             keyboard.press(key)
 
         if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
-            print("Heartrate out of range! Killing app!")
+            print("Heartrate out of range! Killing", applicationName)
             subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
 
         print()
