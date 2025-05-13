@@ -29,7 +29,7 @@ def main():
 
     controlVolume = False # map heartrate to computer volume
     controlMouseSens = False # map heartrate to mouse sensitivity
-    controlKeyHold = True # hold a key if heartrate too low
+    controlKeyHold = False # hold a key if heartrate too low
     controlAppKill = False # kill game if heartrate out of range
 
     key = Key.shift # e.g. Key.shift or 'c' 
