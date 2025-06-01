@@ -31,6 +31,7 @@ def main():
     controlMouseSens = False # map heartrate to mouse sensitivity
     controlKeyHold = False # hold a key if heartrate too low
     controlAppKill = False # kill game if heartrate out of range
+    controlShutdown = False # shut down computer if heartrate out of range
 
     key = Key.shift # e.g. Key.shift or 'c' 
     applicationName = "" # e.g. firefox.exe, program will be killed if HR out of range
@@ -77,6 +78,9 @@ def main():
         if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
             subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
             print("Heartrate out of range! Killing", applicationName)
+
+        if controlShutdown and heartrate < minHR:
+            subprocess.call("SHUTDOWN -P", shell=True)
 
         print()
 
