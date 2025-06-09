@@ -36,12 +36,9 @@ def main():
     key = Key.shift # e.g. Key.shift or 'c' 
     applicationName = "" # e.g. firefox.exe, program will be killed if HR out of range
 
-    minHR = 60 # set heartrate for mins
-    maxHR = 200 # set heartrate for maxes 
-    minVol = 10 # set minimum volume (0-100)
-    maxVol = 100 # set maximum volume
-    minSens = 1 # set minimum mouse sens (1-20)
-    maxSens = 20 # set maximum mouse sens
+    minHR, maxHR = 60, 200 # set mins and maxes for HR
+    minVol, maxVol = 10, 100 # set mins and maxes for volume (0-100)
+    minSens, maxSens = 1, 20 # set mins and maxes for mouse sense (1-20)
 
     # -----------------------------------------API-------------------------------------
 
@@ -56,31 +53,35 @@ def main():
     # ---------------------------------------FUNCTION----------------------------------
 
     while True:
-        response = requests.get(url, headers=headers)
-        print("Status Code:", response.status_code)
-        print("HR:", response.text)
-        heartrate = int(response.text)
+        try:
+            response = requests.get(url, headers=headers)
+            print("Status Code:", response.status_code)
+            print("HR:", response.text)
+            heartrate = int(response.text)
 
-        if controlVolume:
-            computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
-            volume.SetMasterVolumeLevelScalar(computerVolume, None)
-            print("Volume:", round(volume.GetMasterVolumeLevelScalar() * 100))
+            if controlVolume:
+                computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
+                volume.SetMasterVolumeLevelScalar(computerVolume, None)
+                print("Volume:", round(volume.GetMasterVolumeLevelScalar() * 100))
 
-        if controlMouseSens:
-            mouseSens = round(rangeAdjust(minHR,maxHR,minSens,maxSens,heartrate))
-            ctypes.windll.user32.SystemParametersInfoW(113, 0, mouseSens, 0)
-            print("Sens:", mouseSens)
+            if controlMouseSens:
+                mouseSens = round(rangeAdjust(minHR,maxHR,minSens,maxSens,heartrate))
+                ctypes.windll.user32.SystemParametersInfoW(113, 0, mouseSens, 0)
+                print("Sens:", mouseSens)
 
-        if controlKeyHold and heartrate < minHR:
-            keyboard.press(key)
-            print("Holding", key.name)
+            if controlKeyHold and heartrate < minHR:
+                keyboard.press(key)
+                print("Holding", key.name)
 
-        if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
-            subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
-            print("Heartrate out of range! Killing", applicationName)
+            if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
+                subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
+                print("Heartrate out of range! Killing", applicationName)
 
-        if controlShutdown and heartrate < minHR:
-            subprocess.call("SHUTDOWN -P", shell=True)
+            if controlShutdown and heartrate < minHR:
+                subprocess.call("SHUTDOWN -P", shell=True)
+
+        except Exception as e:
+            print("Error fetching HR")
 
         print()
 
