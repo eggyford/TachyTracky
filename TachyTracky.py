@@ -62,7 +62,7 @@ def main():
             if controlVolume:
                 computerVolume = rangeAdjust(minHR,maxHR,minVol,maxVol,heartrate)/100
                 volume.SetMasterVolumeLevelScalar(computerVolume, None)
-                print("Volume:", round(volume.GetMasterVolumeLevelScalar() * 100))
+                print("Volume:", round(computerVolume))
 
             if controlMouseSens:
                 mouseSens = round(rangeAdjust(minHR,maxHR,minSens,maxSens,heartrate))
