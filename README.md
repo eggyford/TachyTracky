@@ -17,4 +17,5 @@ Idk why I made this it's honestly so dumb but if you wanna nerf your friends who
 GUI OBS Overlay:
 
 Sources -> Window Capture -> \[python.exe\]: TachyOverlay
+
 Filters -> Color Key -> Custom Color -> Black
