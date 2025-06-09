@@ -32,6 +32,7 @@ class TachyOverlay:
         if oldRange == 0:
             return newMin
         newValue = (((val - oldMin) * newRange) / oldRange) + newMin
+        
         return max(min(newValue, newMax), newMin)
 
     def fetch_and_update(self):

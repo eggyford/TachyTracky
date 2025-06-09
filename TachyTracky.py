@@ -86,15 +86,13 @@ def main():
         print()
 
 def rangeAdjust(oldMin: int, oldMax: int, newMin: int, newMax: int, val: int):
-    OldRange = (oldMax - oldMin)  
-    NewRange = (newMax - newMin)
-    NewValue = (((val - oldMin) * NewRange) / OldRange) + newMin
-
-    if NewValue > newMax:
-        return newMax
-    if NewValue < newMin:
+    oldRange = oldMax - oldMin
+    newRange = newMax - newMin
+    if oldRange == 0:
         return newMin
-    return NewValue
+    newValue = (((val - oldMin) * newRange) / oldRange) + newMin
+    
+    return max(min(newValue, newMax), newMin)
 
 def checkProcessRunning(name):
     for process in psutil.process_iter(['name']):
