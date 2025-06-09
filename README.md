@@ -18,4 +18,4 @@
 
 - Filters -> Color Key -> Custom Color -> Black
 
-## Idk why I made this it's honestly so dumb but if you wanna nerf your friends who are too good at games this is the tool to do it
+Don't ask me why I made this it's honestly so dumb but if you wanna nerf your friends who are too good at games this is the tool to do it
