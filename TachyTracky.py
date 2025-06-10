@@ -37,7 +37,7 @@ def main():
     key = Key.shift # e.g. Key.shift or 'c' 
     applicationName = "" # e.g. firefox.exe, program will be killed if HR out of range
 
-    minHR, maxHR = 60, 200 # set mins and maxes for HR
+    minHR, maxHR = 80, 200 # set mins and maxes for HR
     minVol, maxVol = 10, 100 # set mins and maxes for volume (0-100)
     minSens, maxSens = 1, 20 # set mins and maxes for mouse sense (1-20)
 
@@ -78,13 +78,12 @@ def main():
                 subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
                 print("Heartrate out of range! Killing", applicationName)
 
-            if controlAltTab and (heartrate > maxHR or heartrate < minHR):
-                if random.randint(1,200) == 200:
-                    keyboard.press(Key.alt)
-                    keyboard.press(Key.tab)
-                    keyboard.release(Key.alt)
-                    keyboard.release(Key.tab)
-                    print("Alt tabbed!")
+            if controlAltTab and (heartrate > maxHR or heartrate < minHR) and random.randint(1,200) == 200:
+                keyboard.press(Key.alt)
+                keyboard.press(Key.tab)
+                keyboard.release(Key.alt)
+                keyboard.release(Key.tab)
+                print("Alt tabbed!")
 
             if controlShutdown and heartrate < minHR:
                 subprocess.call("SHUTDOWN -P", shell=True)

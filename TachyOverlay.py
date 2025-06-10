@@ -38,7 +38,7 @@ class TachyOverlay:
         try:
             # ---------------------------------------SETTINGS----------------------------------
 
-            minHR, maxHR = 60, 200 # set mins and maxes for HR
+            minHR, maxHR = 80, 200 # set mins and maxes for HR
             minVol, maxVol = 10, 100 # set mins and maxes for volume (0-100)
             minSens, maxSens = 1, 20 # set mins and maxes for mouse sense (1-20)
             keyHeld = "Shift"
