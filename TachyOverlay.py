@@ -1,6 +1,5 @@
 import pip._vendor.requests as requests
 import tkinter as tk
-import random
 
 class TachyOverlay:
     def __init__(self, master):
@@ -77,7 +76,6 @@ class TachyOverlay:
     def update_loop(self):
         self.fetch_and_update()
         self.master.after(1000, self.update_loop)  # Call again every second
-
 
 if __name__ == "__main__":
     root = tk.Tk()

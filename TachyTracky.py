@@ -1,5 +1,4 @@
 import pip._vendor.requests as requests # API Calls for pulsoid
-import time
 import random
 
 # pip install pycaw
