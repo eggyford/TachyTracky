@@ -1,5 +1,6 @@
 import pip._vendor.requests as requests # API Calls for pulsoid
 import time
+import random
 
 # pip install pycaw
 
@@ -29,9 +30,10 @@ def main():
 
     controlVolume = False # map heartrate to computer volume
     controlMouseSens = False # map heartrate to mouse sensitivity
-    controlKeyHold = False # hold a key if heartrate too low
-    controlAppKill = False # kill game if heartrate out of range
-    controlShutdown = False # shut down computer if heartrate out of range
+    controlKeyHold = False # hold a key
+    controlAppKill = False # kill game
+    controlAltTab = False # randomly alt tab out of game
+    controlShutdown = False # shut down computer
 
     key = Key.shift # e.g. Key.shift or 'c' 
     applicationName = "" # e.g. firefox.exe, program will be killed if HR out of range
@@ -42,7 +44,7 @@ def main():
 
     # -----------------------------------------API-------------------------------------
 
-    APIKEY = "" # get key from https://pulsoid.net/ui/keys
+    APIKEY = "1adce522-edca-48ba-b4e1-212552bca6eb" # get key from https://pulsoid.net/ui/keys
 
     url = "https://dev.pulsoid.net/api/v1/data/heart_rate/latest?response_mode=text_plain_only_heart_rate"
     headers = {
@@ -76,6 +78,14 @@ def main():
             if controlAppKill and (heartrate > maxHR or heartrate < minHR) and checkProcessRunning(applicationName):
                 subprocess.call("TASKKILL /F /IM " + applicationName, shell=True)
                 print("Heartrate out of range! Killing", applicationName)
+
+            if controlAltTab and (heartrate > maxHR or heartrate < minHR):
+                if random.randint(1,200) == 200:
+                    keyboard.press(Key.alt)
+                    keyboard.press(Key.tab)
+                    keyboard.release(Key.alt)
+                    keyboard.release(Key.tab)
+                    print("Alt tabbed!")
 
             if controlShutdown and heartrate < minHR:
                 subprocess.call("SHUTDOWN -P", shell=True)
