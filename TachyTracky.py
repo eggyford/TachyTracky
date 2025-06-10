@@ -44,7 +44,7 @@ def main():
 
     # -----------------------------------------API-------------------------------------
 
-    APIKEY = "1adce522-edca-48ba-b4e1-212552bca6eb" # get key from https://pulsoid.net/ui/keys
+    APIKEY = "" # get key from https://pulsoid.net/ui/keys
 
     url = "https://dev.pulsoid.net/api/v1/data/heart_rate/latest?response_mode=text_plain_only_heart_rate"
     headers = {
